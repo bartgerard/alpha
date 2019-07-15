@@ -1,15 +1,15 @@
-package be.gerard.alpha;
+package be.gerard.quiz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AlphaApplication {
+public class QuizApplication {
 
     public static void main(
             final String[] args
     ) {
-        SpringApplication.run(AlphaApplication.class, args);
+        SpringApplication.run(QuizApplication.class, args);
     }
 
 }
