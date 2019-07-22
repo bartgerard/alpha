@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -24,19 +22,18 @@ public class TeamRestController {
 
     @GetMapping("{teamId}")
     private Mono<Team> getTeamById(
-            @PathVariable("teamId") final String teamId
+            @PathVariable("teamId") final int teamId
     ) {
-        return Mono.just(new Team("a", "b"));
+        return Mono.just(
+                Team.withId(1).andName("exQuizIt")
+        );
     }
 
     @GetMapping
     private Flux<Team> allTeams() {
-        final List<Team> teams = IntStream.range(0, 100)
-                .mapToObj(String::valueOf)
-                .map(i -> new Team(i, i))
-                .collect(Collectors.toList());
-
-        return Flux.fromIterable(teams);
+        return Flux.fromStream(IntStream.range(0, 100)
+                .mapToObj(i -> Team.withId(i).andName(Integer.toString(i)))
+        );
     }
 
 }

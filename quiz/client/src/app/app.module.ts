@@ -7,6 +7,8 @@ import {registerLocaleData} from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import {PingComponent} from './common/component/ping/ping.component'
 import {HttpClientModule} from '@angular/common/http';
+import {QuizModule} from './quiz/quiz.module';
+import {TeamsComponent} from './quiz/component/teams/teams.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    QuizModule
   ],
   providers: [],
   bootstrap: [

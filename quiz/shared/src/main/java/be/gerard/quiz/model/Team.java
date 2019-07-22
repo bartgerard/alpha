@@ -10,6 +10,29 @@ import lombok.Value;
  */
 @Value
 public class Team {
-    private final String teamId;
+
+    private final Id id;
     private final String name;
+
+    public static Id withId(
+            final int id
+    ) {
+        return new Id(id);
+    }
+
+    @Value
+    public static class Id {
+        private int value;
+
+        public Team andName(
+                final String name
+        ) {
+            return new Team(
+                    this,
+                    name
+            );
+        }
+
+    }
+
 }
