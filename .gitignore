@@ -47,7 +47,6 @@ chrome-profiler-events.json
 speed-measure-plugin.json
 
 # IDEs and editors
-/.idea
 .c9/
 *.launch
 .settings/
