@@ -20,4 +20,13 @@
         </plugins>
     </build>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>be.gerard</groupId>
+            <artifactId>quiz-shared</artifactId>
+        </dependency>
+
+    </dependencies>
+
 </project>

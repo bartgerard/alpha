@@ -14,7 +14,10 @@ export class PingService {
   }
 
   ping(): Observable<string> {
-    return this.http.get<string>(environment.serverUrl + '/ping');
+    return this.http.get<string>(
+      environment.serverUrl + '/ping',
+      {responseType: 'text' as 'json'}
+      );
   }
 
 }
