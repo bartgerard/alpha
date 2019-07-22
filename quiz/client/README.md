@@ -1,27 +1,32 @@
-# Client
+# SubSink
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.4.
+Manage subscriptions.
 
-## Development server
+    sudo npm install subsink --save
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Protractor
 
-## Code scaffolding
+Please make sure to install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    npm install protractor
 
-## Build
+Update web driver manager
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+    webdriver-manager update
 
-## Running unit tests
+Run this command from your root
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    node node_modules\protractor\bin\webdriver-manager update
 
-## Running end-to-end tests
+Now start up a server with:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+    webdriver-manager start
 
-## Further help
+Also make sure that your protractor.conf.js file has below line
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+    // baseUrl: 'http://localhost:4200/',
+    seleniumAddress: 'http://localhost:4444/wd/hub/',
+
+Now run your e2e tests on different browsers
+
+    ng e2e

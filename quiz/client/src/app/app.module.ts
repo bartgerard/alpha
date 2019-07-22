@@ -4,15 +4,19 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {registerLocaleData} from '@angular/common';
-import localeNl from '@angular/common/locales/nl'
+import localeNl from '@angular/common/locales/nl';
+import {PingComponent} from './common/component/ping/ping.component'
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PingComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [
