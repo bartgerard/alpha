@@ -10,12 +10,12 @@ import {Team} from '../model/team';
 export class TeamService {
 
   constructor(
-    private http: HttpClient
+    private _http: HttpClient
   ) {
   }
 
   teams(): Observable<Team[]> {
-    return this.http.get<Team[]>(
+    return this._http.get<Team[]>(
       environment.serverUrl + '/teams'
     );
   }

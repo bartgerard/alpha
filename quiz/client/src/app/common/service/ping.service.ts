@@ -9,12 +9,12 @@ import {environment} from '../../../environments/environment';
 export class PingService {
 
   constructor(
-    private http: HttpClient
+    private _http: HttpClient
   ) {
   }
 
   ping(): Observable<string> {
-    return this.http.get<string>(
+    return this._http.get<string>(
       environment.serverUrl + '/ping',
       {responseType: 'text' as 'json'}
       );

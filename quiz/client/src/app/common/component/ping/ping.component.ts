@@ -18,7 +18,7 @@ export class PingComponent extends Subscribable implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptions.sink = this.pingService.ping()
+    this.subs.sink = this.pingService.ping()
       .subscribe(pong => this.pong = pong);
   }
 

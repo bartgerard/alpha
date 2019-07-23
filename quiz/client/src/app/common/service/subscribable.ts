@@ -4,12 +4,12 @@ import {OnDestroy} from '@angular/core';
 export abstract class Subscribable implements OnDestroy {
 
   protected constructor(
-    public subscriptions = new SubSink()
+    protected subs = new SubSink()
   ) {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subs.unsubscribe();
   }
 
 }
