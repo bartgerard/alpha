@@ -1,4 +1,4 @@
-package be.gerard.quiz.model;
+package be.gerard.team.model;
 
 import lombok.Value;
 

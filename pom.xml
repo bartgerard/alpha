@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>quiz</module>
+        <module>team</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -121,6 +122,11 @@
 
             <!-- Me, Myself and I -->
 
+            <dependency>
+                <groupId>be.gerard</groupId>
+                <artifactId>team-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>be.gerard</groupId>
                 <artifactId>quiz-shared</artifactId>
