@@ -6,6 +6,7 @@
     <modules>
         <module>quiz</module>
         <module>team</module>
+        <module>common</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
