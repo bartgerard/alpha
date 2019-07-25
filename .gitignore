@@ -73,3 +73,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+*-private.properties
+*-local.properties
+
+/quiz/web/src/main/resources/static/

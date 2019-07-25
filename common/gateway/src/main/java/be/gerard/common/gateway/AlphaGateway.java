@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class GatewayApplication {
+public class AlphaGateway {
 
     public static void main(
             final String[] args
     ) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication.run(AlphaGateway.class, args);
     }
 
     @Bean

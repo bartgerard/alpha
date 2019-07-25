@@ -1,0 +1,36 @@
+#server:
+#  servlet:
+#    context-path: /api
+
+#management:
+#  endpoint:
+#    shutdown:
+#      enabled: true
+
+#server:
+#  port: 8080
+
+#spring:
+#  mail:
+#    host: smtp.gmail.com
+#    port: 578
+#    username:
+#    password:
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+
+#life-stater:
+#  export:
+#    uri: test
+
+spring:
+  application:
+    name: quiz-client
+#  resources:
+#    static-locations: classpath:/static/
+server:
+  port: 0

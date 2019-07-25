@@ -1,4 +1,4 @@
-package be.gerard.quiz.config;
+package be.gerard.common.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
