@@ -1,6 +1,5 @@
 package be.gerard.common.gateway;
 
-import com.netflix.discovery.EurekaClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -26,35 +25,24 @@ public class GatewayApplication {
 
     @Bean
     public RouteLocator myRoutes(
-            final RouteLocatorBuilder builder,
-            final EurekaClient discoveryClient
+            final RouteLocatorBuilder builder
     ) {
-        /*
-        spring:
-          cloud:
-            gateway:
-              discovery.locator:
-                enabled: true
-                lowerCaseServiceId: true
-         */
-        final String quizServiceUrl = discoveryClient.getNextServerFromEureka("quiz-service", false)
-                .getHomePageUrl();
-        final String teamServiceUrl = discoveryClient.getNextServerFromEureka("team-service", false)
-                .getHomePageUrl();
+        // lb:// --> Load Balancing?
 
         return builder.routes()
                 //.route(p -> p.path("/get")
                 //        .filters(f -> f.addRequestHeader("Hello", "World"))
                 //        .uri("http://httpbin.org:80")
                 //)
-                .route(p -> p.path("/ping")
-                        .uri(quizServiceUrl + "ping")
+                .route(p -> p.path("/ping/**")
+                        .filters(rw -> rw.rewritePath("/quiz/(?<segment>.*)", "/${segment}"))
+                        .uri("lb://QUIZ-SERVICE")
                 )
                 .route(p -> p.path("/quiz/**")
-                        .uri(quizServiceUrl)
+                        .uri("lb://QUIZ-SERVICE")
                 )
                 .route(p -> p.path("/teams/**")
-                        .uri(teamServiceUrl)
+                        .uri("lb://TEAM-SERVICE")
                 )
                 .build();
     }

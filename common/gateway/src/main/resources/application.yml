@@ -7,3 +7,12 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+
+management:
+  endpoint:
+    gateway:
+      enabled: true # default value
+  endpoints:
+    web:
+      exposure:
+        include: gateway

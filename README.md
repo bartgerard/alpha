@@ -50,3 +50,36 @@ OR
                         .build()
                 );
     }
+
+# Spring Cloud Gateway
+
+## Automatic Import From Eureka
+
+    /*
+    spring:
+      cloud:
+        gateway:
+          discovery.locator:
+            enabled: true
+            lowerCaseServiceId: true
+     */
+    
+## Reload routes
+
+    POST /application/gateway/refresh
+    
+# Eureka
+
+## Manual
+
+    final EurekaClient discoveryClient
+    
+    final String quizServiceUrl = discoveryClient.getNextServerFromEureka("quiz-service", false)
+            .getHomePageUrl();
+            
+    final String teamServiceUrl = discoveryClient.getNextServerFromEureka("team-service", false)
+            .getHomePageUrl();
+            
+## Automatic
+
+    lb://QUIZ-SERVICE
