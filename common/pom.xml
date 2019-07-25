@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>discovery</module>
+        <module>gateway</module>
     </modules>
 
 

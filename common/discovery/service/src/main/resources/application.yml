@@ -5,7 +5,7 @@ eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false
+    register-with-eureka: false # Remember for production --> https://blog.asarkar.org/technical/netflix-eureka/
     fetch-registry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
