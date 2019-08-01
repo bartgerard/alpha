@@ -30,21 +30,24 @@ public class AlphaGateway {
         // lb:// --> Load Balancing?
 
         return builder.routes()
-                //.route(p -> p.path("/get")
-                //        .filters(f -> f.addRequestHeader("Hello", "World"))
-                //        .uri("http://httpbin.org:80")
-                //)
-                .route(p -> p.path("/ping/**")
-                        .filters(rw -> rw.rewritePath("/quiz/(?<segment>.*)", "/${segment}"))
-                        .uri("lb://QUIZ-SERVICE")
-                )
-                .route(p -> p.path("/quiz/**")
-                        .uri("lb://QUIZ-SERVICE")
-                )
-                .route(p -> p.path("/teams/**")
-                        .uri("lb://TEAM-SERVICE")
-                )
-                .build();
+                      //.route(p -> p.path("/get")
+                      //        .filters(f -> f.addRequestHeader("Hello", "World"))
+                      //        .uri("http://httpbin.org:80")
+                      //)
+                      .route(p -> p.path("/ping/**")
+                                   .filters(rw -> rw.rewritePath("/quiz/(?<segment>.*)", "/${segment}"))
+                                   .uri("lb://QUIZ-SERVICE")
+                      )
+                      .route(p -> p.path("/quiz/**")
+                                   .uri("lb://QUIZ-SERVICE")
+                      )
+                      .route(p -> p.path("/teams/**")
+                                   .uri("lb://TEAM-SERVICE")
+                      )
+                      .route(p -> p.path("/**")
+                                   .uri("lb://QUIZ-CLIENT")
+                      )
+                      .build();
     }
 
 }
