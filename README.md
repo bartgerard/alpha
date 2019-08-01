@@ -3,6 +3,10 @@
 Manage subscriptions.
 
     sudo npm install subsink --save
+    
+# Cypress
+
+    sudo npm install cypress --save-dev
 
 # Protractor
 
