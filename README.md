@@ -83,3 +83,9 @@ OR
 ## Automatic
 
     lb://QUIZ-SERVICE
+    
+# J4EV3
+
+1. Search for the Bluetooth mac address.
+
+        system_profiler SPBluetoothDataType

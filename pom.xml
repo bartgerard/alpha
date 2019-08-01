@@ -7,6 +7,7 @@
         <module>quiz</module>
         <module>team</module>
         <module>common</module>
+        <module>gx</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,6 +24,9 @@
     <properties>
         <java.version>12</java.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <ev3.version>0.9.1-beta</ev3.version>
+        <bluecove.version>2.1.2</bluecove.version>
+        <j4ev3.version>1.0.0</j4ev3.version>
     </properties>
 
     <dependencies>
@@ -125,6 +129,21 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- ev3 -->
+            <dependency>
+                <groupId>com.github.bdeneuter</groupId>
+                <artifactId>lejos-ev3-api</artifactId>
+                <version>${ev3.version}</version>
+            </dependency>
+
+            <!-- Bluetooth -->
+
+            <dependency>
+                <groupId>io.ultreia</groupId>
+                <artifactId>bluecove</artifactId>
+                <version>${bluecove.version}</version>
             </dependency>
 
             <!-- Me, Myself and I -->
