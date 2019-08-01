@@ -78,3 +78,4 @@ Thumbs.db
 *-local.properties
 
 /quiz/web/src/main/resources/static/
+/quiz/web/src/main/resources/public/

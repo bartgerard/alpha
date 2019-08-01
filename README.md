@@ -93,3 +93,7 @@ OR
 1. Search for the Bluetooth mac address.
 
         system_profiler SPBluetoothDataType
+        
+# npm
+
+    sudo npm install --unsafe-perm=true --allow-root
