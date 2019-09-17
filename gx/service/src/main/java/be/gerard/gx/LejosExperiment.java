@@ -8,13 +8,16 @@ import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RemoteEV3;
+import lejos.remote.ev3.RemoteRequestEV3;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.ArcRotateMoveController;
 import lejos.robotics.navigation.MoveController;
 import lejos.robotics.navigation.MovePilot;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -29,8 +32,8 @@ public class LejosExperiment {
 
     public static void main(
             final String[] args
-    ) throws RemoteException, NotBoundException, MalformedURLException {
-        c();
+    ) throws IOException, NotBoundException {
+        f();
     }
 
     private static void a() throws RemoteException, NotBoundException, MalformedURLException {
@@ -82,17 +85,79 @@ public class LejosExperiment {
 
         final RMIRegulatedMotor[] motors = new RMIRegulatedMotor[]{motorB, motorC};
 
-        for (final RMIRegulatedMotor motor : motors) {
-            motor.rotate(360, true);
-        }
+        motorB.setSpeed(360); // degrees per second
+        motorC.setSpeed(720); // degrees per second
+
+        motorB.rotate(360, true);
+        motorC.rotate(720, true);
 
         for (final RMIRegulatedMotor motor : motors) {
             motor.waitComplete();
         }
 
+        //for (final RMIRegulatedMotor motor : motors) {
+        //    motor.rotate(360, true);
+        //}
+        //
+        //for (final RMIRegulatedMotor motor : motors) {
+        //    motor.waitComplete();
+        //}
+
         for (final RMIRegulatedMotor motor : motors) {
             motor.close();
         }
+    }
+
+    private static void e() throws IOException {
+        // https://sourceforge.net/p/lejos/wiki/Remote%20access%20to%20an%20EV3/
+
+        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.100");
+        ev3.setDefault();
+        // ev3.getLED().setPattern(EV3LED.COLOR_GREEN);
+
+        final Audio sound = ev3.getAudio();
+        sound.systemSound(0);
+
+        final RegulatedMotor motorB = ev3.createRegulatedMotor("B", 'L');
+        final RegulatedMotor motorC = ev3.createRegulatedMotor("C", 'L');
+
+        final RegulatedMotor[] motors = new RegulatedMotor[]{motorB, motorC};
+
+        final ArcRotateMoveController pilot = ev3.createPilot(MoveController.WHEEL_SIZE_EV3, 10, "B", "C");
+
+
+        //motorB.setSpeed(360); // degrees per second
+        //motorC.setSpeed(720); // degrees per second
+        //
+        //motorB.rotate(360, true);
+        //motorC.rotate(720, true);
+        //
+        //for (final RegulatedMotor motor : motors) {
+        //    motor.waitComplete();
+        //}
+
+        for (final RegulatedMotor motor : motors) {
+            motor.close();
+        }
+
+        ev3.disConnect();
+    }
+
+    private static void f() throws IOException {
+        // https://sourceforge.net/p/lejos/wiki/Remote%20access%20to%20an%20EV3/
+
+        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.100");
+        ev3.setDefault();
+
+        final ArcRotateMoveController pilot = ev3.createPilot(MoveController.WHEEL_SIZE_EV3, 10, "B", "C");
+
+        pilot.arc(10, 360);
+        //pilot.travel(10);
+        //pilot.rotate(360);
+
+        pilot.stop();
+
+        ev3.disConnect();
     }
 
     private static void d() throws RemoteException, NotBoundException, MalformedURLException {
