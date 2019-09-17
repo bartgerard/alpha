@@ -37,6 +37,7 @@ public class Application {
                brick.getMotor().turnAtPower((byte) (Motor.PORT_B + Motor.PORT_C), 100);
                brick.getSensor().getValuePercent(Sensor.PORT_3, Sensor.TYPE_COLOR, Sensor.COLOR_AMBIENT);
                brick.getSpeaker().playTone(100, 600, 1000);
+               brick.getMotor().stopMotor((byte) (Motor.PORT_B + Motor.PORT_C), true);
            });
 
     }
