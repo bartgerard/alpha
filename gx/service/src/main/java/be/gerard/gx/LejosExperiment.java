@@ -77,14 +77,22 @@ public class LejosExperiment {
         final Audio sound = ev3.getAudio();
         sound.systemSound(0);
 
-        final RMIRegulatedMotor left = ev3.createRegulatedMotor("B", 'L');
-        final RMIRegulatedMotor right = ev3.createRegulatedMotor("C", 'L');
+        final RMIRegulatedMotor motorB = ev3.createRegulatedMotor("B", 'L');
+        final RMIRegulatedMotor motorC = ev3.createRegulatedMotor("C", 'L');
 
-        left.rotate(360);
-        right.rotate(360);
+        final RMIRegulatedMotor[] motors = new RMIRegulatedMotor[]{motorB, motorC};
 
-        left.close();
-        right.close();
+        for (final RMIRegulatedMotor motor : motors) {
+            motor.rotate(360, true);
+        }
+
+        for (final RMIRegulatedMotor motor : motors) {
+            motor.waitComplete();
+        }
+
+        for (final RMIRegulatedMotor motor : motors) {
+            motor.close();
+        }
     }
 
     private static void d() throws RemoteException, NotBoundException, MalformedURLException {
