@@ -1,13 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RobotComponent} from './component/robot/robot.component';
+import { ControlComponent } from './component/control/control.component';
+import { DrawingComponent } from './component/drawing/drawing.component';
 
 @NgModule({
   declarations: [
-    RobotComponent
+    RobotComponent,
+    ControlComponent,
+    DrawingComponent,
   ],
   exports: [
-    RobotComponent
+    RobotComponent,
+    ControlComponent,
   ],
   imports: [
     CommonModule
