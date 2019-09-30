@@ -1,4 +1,4 @@
-package be.gerard.gx;
+package be.gerard.robot;
 
 import lejos.hardware.Audio;
 import lejos.hardware.Brick;
@@ -125,6 +125,7 @@ public class LejosExperiment {
 
         final ArcRotateMoveController pilot = ev3.createPilot(MoveController.WHEEL_SIZE_EV3, 10, "B", "C");
 
+        // https://lejosnews.wordpress.com/2015/02/26/ev3-to-ev3-motor-control/
 
         //motorB.setSpeed(360); // degrees per second
         //motorC.setSpeed(720); // degrees per second
@@ -151,7 +152,7 @@ public class LejosExperiment {
 
         final ArcRotateMoveController pilot = ev3.createPilot(MoveController.WHEEL_SIZE_EV3, 10, "B", "C");
 
-        pilot.arc(10, 360);
+        pilot.arc(20, 180);
         //pilot.travel(10);
         //pilot.rotate(360);
 

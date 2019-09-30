@@ -1,4 +1,4 @@
-package be.gerard.gx.util;
+package be.gerard.robot.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

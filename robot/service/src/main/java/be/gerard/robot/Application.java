@@ -1,6 +1,6 @@
-package be.gerard.gx;
+package be.gerard.robot;
 
-import be.gerard.gx.util.Devices;
+import be.gerard.robot.util.Devices;
 import com.j4ev3.core.Brick;
 import com.j4ev3.core.Button;
 import com.j4ev3.core.LCD;
