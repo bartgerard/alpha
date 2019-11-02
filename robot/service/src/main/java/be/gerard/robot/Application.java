@@ -10,7 +10,6 @@ import com.j4ev3.core.Sensor;
 import com.j4ev3.desktop.BluetoothComm;
 
 import javax.bluetooth.RemoteDevice;
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -25,7 +24,7 @@ public class Application {
 
     public static void main(
             final String[] args
-    ) throws IOException {
+    ) {
         final Optional<RemoteDevice> ev3 = Devices.findByName(EV3_NAME);
 
         ev3.map(RemoteDevice::getBluetoothAddress)

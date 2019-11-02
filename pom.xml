@@ -7,7 +7,7 @@
         <module>quiz</module>
         <module>team</module>
         <module>common</module>
-        <module>gx</module>
+        <module>robot</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
