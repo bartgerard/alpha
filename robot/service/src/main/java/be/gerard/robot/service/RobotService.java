@@ -1,8 +1,12 @@
 package be.gerard.robot.service;
 
+import be.gerard.robot.model.Controls;
+import be.gerard.robot.model.Ev3Robot;
+import be.gerard.robot.model.PilotConfiguration;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
 import lejos.remote.ev3.RemoteRequestEV3;
+import lejos.robotics.navigation.ArcRotateMoveController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,26 +20,40 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RobotService {
 
-    private static final Map<String, RemoteRequestEV3> DEVICE_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, Ev3Robot> ROBOT_MAP = new ConcurrentHashMap<>();
+
+    private static Optional<Ev3Robot> findByName(
+            final String name
+    ) {
+        return Optional.ofNullable(ROBOT_MAP.get(name));
+    }
+
+    private static Ev3Robot getByName(
+            final String name
+    ) {
+        return findByName(name).orElseThrow(() -> new IllegalArgumentException(String.format(
+                "robot not registered [name=%s]",
+                name
+        )));
+    }
 
     public String registerByName(
             final String name
     ) {
         final String ip = findIpByName(name)
                 .orElseThrow(() -> new IllegalArgumentException(String.format(
-                        "device not found [name=%s]",
+                        "robot not found [name=%s]",
                         name
                 )));
 
-        final RemoteRequestEV3 ev3 = connectByIp(ip)
+        final Ev3Robot robot = connectByIp(ip)
                 .orElseThrow(() -> new IllegalStateException(String.format(
-                        "device not connected [name=%s,ip=%s]",
+                        "robot not connected [name=%s,ip=%s]",
                         name,
                         ip
                 )));
 
-
-        DEVICE_MAP.put(name, ev3);
+        ROBOT_MAP.put(name, robot);
 
         return ip;
     }
@@ -55,11 +73,16 @@ public class RobotService {
         return Optional.empty();
     }
 
-    private Optional<RemoteRequestEV3> connectByIp(
+    private Optional<Ev3Robot> connectByIp(
             final String ip
     ) {
         try {
-            return Optional.of(new RemoteRequestEV3(ip));
+            return Optional.of(Ev3Robot.builder()
+                                       .ip(ip)
+                                       .ev3(new RemoteRequestEV3(ip))
+                                       .build()
+
+            );
         } catch (IOException e) {
             log.error("discovery exception", e);
         }
@@ -70,12 +93,46 @@ public class RobotService {
     public void unregisterByName(
             final String name
     ) {
-        final RemoteRequestEV3 ev3 = DEVICE_MAP.get(name);
-        DEVICE_MAP.remove(name);
+        final Ev3Robot robot = ROBOT_MAP.get(name);
+        ROBOT_MAP.remove(name);
 
-        // TODO close RegulatedMotor
+        robot.disconnect();
+    }
 
-        ev3.disConnect();
+    public void configureByName(
+            final String name,
+            final String pilotId,
+            final PilotConfiguration configuration
+    ) {
+        final Ev3Robot robot = getByName(name);
+
+        if (robot.getPilotMap().containsKey(pilotId)) {
+            throw new IllegalArgumentException(String.format(
+                    "robot already contains the given pilotId [name=%s,pilotId=%s]",
+                    name,
+                    pilotId
+            ));
+        }
+
+        final ArcRotateMoveController pilot = robot.getEv3()
+                                                   .createPilot(
+                                                           configuration.getWheelDiameter(),
+                                                           configuration.getTrackWidth(),
+                                                           configuration.getLeftMotor(),
+                                                           configuration.getRightMotor()
+                                                   );
+
+        robot.getPilotMap().put(pilotId, pilot);
+    }
+
+    public void handle(
+            final String name,
+            final String pilotId,
+            final Controls.Control command
+    ) {
+        findByName(name)
+                .flatMap(robot -> robot.findById(pilotId))
+                .ifPresent(command::execute);
     }
 
 }

@@ -12,3 +12,48 @@ PUT http://localhost:8080/robots/registrations/EV3
 Accept: application/json
 
 ###
+
+DELETE http://localhost:8080/robots/registrations/EV3
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/robots/EV3/pilots/main
+Content-Type: application/json
+
+{
+  "wheelDiameter": 4.32,
+  "trackWidth": 10,
+  "leftMotor": "B",
+  "rightMotor": "C"
+}
+
+###
+
+PUT http://localhost:8080/robots/EV3/pilots/main/arc
+Content-Type: application/json
+
+{
+  "radius": 20,
+  "angle": 180
+}
+
+###
+
+PUT http://localhost:8080/robots/EV3/pilots/main/forward
+Content-Type: application/json
+
+{
+  "distance": 20
+}
+
+###
+
+PUT http://localhost:8080/robots/EV3/pilots/main/rotate
+Content-Type: application/json
+
+{
+  "angle": -360
+}
+
+###
