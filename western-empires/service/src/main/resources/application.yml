@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: mega-empires-service
+server:
+  port: 0

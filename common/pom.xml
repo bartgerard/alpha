@@ -11,10 +11,10 @@
 
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>discovery</module>
         <module>gateway</module>
     </modules>
-
-
+    
 </project>

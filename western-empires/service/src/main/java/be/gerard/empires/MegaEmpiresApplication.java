@@ -8,12 +8,12 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableWebFlux
-public class EmpiresApplication {
+public class MegaEmpiresApplication {
 
     public static void main(
             final String[] args
     ) {
-        SpringApplication.run(EmpiresApplication.class, args);
+        SpringApplication.run(MegaEmpiresApplication.class, args);
     }
 
 }

@@ -41,8 +41,12 @@ public class AlphaGateway {
                       .route(p -> p.path("/quiz/**")
                                    .uri("lb://QUIZ-SERVICE")
                       )
+                      // localhost:8080/teams --> localhost:0/teams
                       .route(p -> p.path("/teams/**")
                                    .uri("lb://TEAM-SERVICE")
+                      )
+                      .route(p -> p.path("/empires/**")
+                                   .uri("lb://MEGA-EMPIRES-SERVICE")
                       )
                       .route(p -> p.path("/**")
                                    .uri("lb://QUIZ-CLIENT")
