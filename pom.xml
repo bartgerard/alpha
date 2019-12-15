@@ -8,6 +8,7 @@
         <module>team</module>
         <module>common</module>
         <module>robot</module>
+        <module>western-empires</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,7 +24,7 @@
 
     <properties>
         <java.version>12</java.version>
-        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <ev3.version>0.9.1-beta</ev3.version>
         <bluecove.version>2.1.2</bluecove.version>
         <j4ev3.version>1.0.0</j4ev3.version>
@@ -156,6 +157,11 @@
             <dependency>
                 <groupId>be.gerard</groupId>
                 <artifactId>quiz-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.gerard</groupId>
+                <artifactId>western-empires-shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

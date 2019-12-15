@@ -3,14 +3,16 @@ import {CommonModule} from '@angular/common';
 import {TeamComponent} from './component/team/team.component';
 import {TeamsComponent} from './component/teams/teams.component';
 import {HttpClientModule} from '@angular/common/http';
-import { QuizComponent } from './component/quiz/quiz.component';
+import {QuizComponent} from './component/quiz/quiz.component';
+import {QuestionComponent} from './component/question/question.component';
 
 
 @NgModule({
   declarations: [
     TeamComponent,
     TeamsComponent,
-    QuizComponent
+    QuizComponent,
+    QuestionComponent
   ],
   imports: [
     CommonModule,

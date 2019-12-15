@@ -1,7 +1,9 @@
 <ul>
+  <!--
   <li *ngFor="let team of teams">
     <app-team [team]="team"></app-team>
   </li>
+  -->
   <li *ngFor="let team of teams$ | async">
     <app-team [team]="team"></app-team>
   </li>

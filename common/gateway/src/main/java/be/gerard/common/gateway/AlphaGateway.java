@@ -35,7 +35,7 @@ public class AlphaGateway {
                       //        .uri("http://httpbin.org:80")
                       //)
                       .route(p -> p.path("/ping/**")
-                                   .filters(rw -> rw.rewritePath("/quiz/(?<segment>.*)", "/${segment}"))
+                                   //.filters(rw -> rw.rewritePath("/quiz/(?<segment>.*)", "/${segment}"))
                                    .uri("lb://QUIZ-SERVICE")
                       )
                       .route(p -> p.path("/quiz/**")

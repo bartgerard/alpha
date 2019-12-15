@@ -1,10 +1,8 @@
 package be.gerard.quiz.model;
 
-/**
- * Question
- *
- * @author bartgerard
- * @version v0.0.1
- */
+import lombok.Value;
+
+@Value
 public class Question {
+    private final String value;
 }
