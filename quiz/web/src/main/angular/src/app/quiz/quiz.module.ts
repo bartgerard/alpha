@@ -5,6 +5,9 @@ import {TeamsComponent} from './component/teams/teams.component';
 import {HttpClientModule} from '@angular/common/http';
 import {QuizComponent} from './component/quiz/quiz.component';
 import {QuestionComponent} from './component/question/question.component';
+import {ButtonModule, InputTextModule} from 'primeng';
+import {AnswerComponent} from './component/answer/answer.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -12,11 +15,15 @@ import {QuestionComponent} from './component/question/question.component';
     TeamComponent,
     TeamsComponent,
     QuizComponent,
-    QuestionComponent
+    QuestionComponent,
+    AnswerComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    InputTextModule,
+    FormsModule,
+    ButtonModule
   ]
 })
 export class QuizModule {
