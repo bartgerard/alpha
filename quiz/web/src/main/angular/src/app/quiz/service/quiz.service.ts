@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {SseService} from '../../common/service/sse.service';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {StateChanged} from '../model/state-changed';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class QuizService {
   ) {
   }
 
-  events(): Observable<string> {
-    return this._sseService.getServerSentEvent<string>(environment.serverUrl + '/quiz/stream-sse');
+  events(): Observable<StateChanged> {
+    return this._sseService.getServerSentEvent<StateChanged>(environment.serverUrl + '/quiz/stream-sse-emitter');
   }
 
 }

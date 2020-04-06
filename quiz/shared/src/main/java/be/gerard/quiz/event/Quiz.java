@@ -1,6 +1,8 @@
 package be.gerard.quiz.event;
 
+import be.gerard.quiz.model.Question;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
@@ -18,6 +20,14 @@ public final class Quiz {
     @Value
     public static class Started implements Event {
 
+    }
+
+    @Value
+    @Builder
+    public static class StateChanged implements Event {
+        private final int roundId;
+        private final int questionId;
+        private final Question.State questionState;
     }
 
 }

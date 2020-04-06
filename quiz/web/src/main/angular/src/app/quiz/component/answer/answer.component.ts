@@ -1,13 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {StateChanged} from '../../model/state-changed';
 
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
   styleUrls: ['./answer.component.css']
 })
-export class AnswerComponent implements OnInit {
+export class AnswerComponent implements OnInit, OnChanges {
 
   answer: string;
+  disabled: boolean = true;
+
+  @Input()
+  state: StateChanged;
 
   constructor() {
   }
@@ -20,4 +25,11 @@ export class AnswerComponent implements OnInit {
   ) {
 
   }
+
+  ngOnChanges(
+    changes: SimpleChanges
+  ): void {
+    console.log(changes);
+  }
+  
 }

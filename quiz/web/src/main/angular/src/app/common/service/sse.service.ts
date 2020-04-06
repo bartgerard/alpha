@@ -24,7 +24,7 @@ export class SseService {
       observer => {
         const eventSource = SseService.getEventSource(url);
 
-        eventSource.onmessage = event => this._zone.run(() => observer.next(event.data));
+        eventSource.onmessage = event => this._zone.run(() => observer.next(JSON.parse(event.data)));
         eventSource.onerror = error => this._zone.run(() => observer.error(error));
 
         return () => eventSource.close();
