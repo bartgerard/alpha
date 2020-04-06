@@ -1,8 +1,8 @@
 export class Id<T> {
 
-    constructor(
-        public value: T
-    ) {
-    }
+  constructor(
+    public value: T
+  ) {
+  }
 
 }
