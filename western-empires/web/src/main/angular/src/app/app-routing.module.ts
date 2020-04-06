@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EmpiresComponent} from '../../../angular8/src/app/mega-empires/component/empires/empires.component';
+import {EmpiresComponent} from './mega-empires/component/empires/empires.component';
 
 const routes: Routes = [
   {path: '', component: EmpiresComponent},
