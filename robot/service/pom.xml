@@ -18,11 +18,6 @@
             <artifactId>lejos-ev3-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.ultreia</groupId>
-            <artifactId>bluecove</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>
