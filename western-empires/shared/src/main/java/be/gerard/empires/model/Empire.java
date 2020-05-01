@@ -5,9 +5,9 @@ import lombok.Value;
 @Value
 public class Empire {
 
-    private final Empire.Id id;
-    private final String label;
-    private final String hexColorCode;
+    Empire.Id id;
+    String label;
+    String hexColorCode;
 
     public static Id withId(
             final int id
@@ -18,7 +18,7 @@ public class Empire {
     @Value
     public static class Id {
 
-        private int value;
+        int value;
 
         public Empire andLabelAndColorCode(
                 final String label,

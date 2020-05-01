@@ -5,8 +5,8 @@ import lombok.Value;
 @Value
 public class Player {
 
-    private final Id id;
-    private final String name;
+    Id id;
+    String name;
 
     public static Id withId(
             final int id
@@ -17,7 +17,7 @@ public class Player {
     @Value
     public static class Id {
 
-        private int value;
+        int value;
 
         public Player andName(
                 final String name

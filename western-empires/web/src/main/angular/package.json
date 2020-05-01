@@ -25,6 +25,7 @@
     "@angular/platform-browser": "^9.1.4",
     "@angular/platform-browser-dynamic": "^9.1.4",
     "@angular/router": "^9.1.4",
+    "bootstrap": "^4.4.1",
     "rxjs": "^6.5.5",
     "subsink": "^1.0.1",
     "tslib": "^1.11.1",
