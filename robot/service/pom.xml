@@ -13,6 +13,15 @@
 
     <dependencies>
 
+        <!-- 1st Party -->
+
+        <dependency>
+            <groupId>be.gerard</groupId>
+            <artifactId>robot-common</artifactId>
+        </dependency>
+
+        <!-- 3rd Party -->
+
         <dependency>
             <groupId>com.github.bdeneuter</groupId>
             <artifactId>lejos-ev3-api</artifactId>

@@ -124,6 +124,22 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- 1st Party -->
+
+            <dependency>
+                <groupId>be.gerard</groupId>
+                <artifactId>robot-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.gerard</groupId>
+                <artifactId>robot-service</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <!-- 3rd Party -->
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

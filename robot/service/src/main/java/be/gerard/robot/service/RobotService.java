@@ -78,9 +78,9 @@ public class RobotService {
     ) {
         try {
             return Optional.of(Ev3Robot.builder()
-                                       .ip(ip)
-                                       .ev3(new RemoteRequestEV3(ip))
-                                       .build()
+                    .ip(ip)
+                    .ev3(new RemoteRequestEV3(ip))
+                    .build()
 
             );
         } catch (IOException e) {
@@ -115,12 +115,12 @@ public class RobotService {
         }
 
         final ArcRotateMoveController pilot = robot.getEv3()
-                                                   .createPilot(
-                                                           configuration.getWheelDiameter(),
-                                                           configuration.getTrackWidth(),
-                                                           configuration.getLeftMotor(),
-                                                           configuration.getRightMotor()
-                                                   );
+                .createPilot(
+                        configuration.getWheelDiameter(),
+                        configuration.getTrackWidth(),
+                        configuration.getLeftMotor(),
+                        configuration.getRightMotor()
+                );
 
         robot.getPilotMap().put(pilotId, pilot);
     }
