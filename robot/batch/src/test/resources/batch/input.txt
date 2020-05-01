@@ -1,3 +1,7 @@
+REG,EV3,main,4.32,10,B,C
+REG,EV3,main,4.32,10,B,C
+REG,EV3,main,4.32,10,B,C
+REG,EV3,main,4.32,10,B,C
 MOV
 MOV
 MOV

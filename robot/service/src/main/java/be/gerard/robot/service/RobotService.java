@@ -8,6 +8,7 @@ import lejos.hardware.BrickInfo;
 import lejos.remote.ev3.RemoteRequestEV3;
 import lejos.robotics.navigation.ArcRotateMoveController;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -128,11 +129,37 @@ public class RobotService {
     public void handle(
             final String name,
             final String pilotId,
-            final Controls.Control command
+            final Controls.Control.Movement command
     ) {
         findByName(name)
                 .flatMap(robot -> robot.findById(pilotId))
                 .ifPresent(command::execute);
+    }
+
+    @EventListener
+    public void handle(
+            final Controls.Register event
+    ) {
+        if (findByName(event.getName()).isEmpty()) {
+            registerByName(event.getName());
+        }
+
+        configureByName(
+                event.getName(),
+                event.getPilotId(),
+                event.getPilotConfiguration()
+        );
+    }
+
+    @EventListener
+    public void handle(
+            final Controls.MoveForward event
+    ) {
+        //handle(
+        //        event.getName(),
+        //        event.getPilotId(),
+        //        event
+        //);
     }
 
 }

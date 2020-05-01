@@ -1,5 +1,6 @@
-package be.gerard.robot;
+package be.gerard.robot.config;
 
+import be.gerard.robot.model.Controls;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -14,24 +15,26 @@ import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
-import org.springframework.batch.item.file.mapping.FieldSetMapper;
-import org.springframework.batch.item.file.mapping.PatternMatchingCompositeLineMapper;
-import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
-import org.springframework.batch.item.file.transform.LineTokenizer;
-import org.springframework.batch.item.file.transform.Range;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.FileSystemResource;
 
-import java.util.Map;
-
 @Configuration
+@ComponentScan({
+        "be.gerard.robot.service"
+})
 @EnableAutoConfiguration
 @EnableBatchProcessing
 @RequiredArgsConstructor
+@Import({
+        RobotMapperConfig.class
+})
 public class RobotJobConfig {
 
     private final StepBuilderFactory stepBuilderFactory;
@@ -50,12 +53,12 @@ public class RobotJobConfig {
 
     @Bean
     public Step step1(
-            @Qualifier("inputRouteReader") final FlatFileItemReader<Command> itemReader,
-            @Qualifier("routeProcessor") final ItemProcessor<Command, String> processor,
+            @Qualifier("inputRouteReader") final FlatFileItemReader<Controls.Control> itemReader,
+            @Qualifier("routeProcessor") final ItemProcessor<Controls.Control, String> processor,
             @Qualifier("outputRouteWriter") final FlatFileItemWriter<String> itemWriter
     ) {
         return stepBuilderFactory.get("step1")
-                .<Command, String>chunk(1)
+                .<Controls.Control, String>chunk(10)
                 .reader(itemReader)
                 .processor(processor)
                 .writer(itemWriter)
@@ -63,56 +66,27 @@ public class RobotJobConfig {
     }
 
     @Bean
-    public LineMapper<Command> robotRouteLineMapper() {
-        final var lineMapper = new PatternMatchingCompositeLineMapper<Command>();
-
-        lineMapper.setTokenizers(Map.ofEntries(
-                Map.entry("MOV*", movementTokenizer())
-        ));
-
-        lineMapper.setFieldSetMappers(Map.ofEntries(
-                Map.entry("MOV*", movementFieldSetMapper())
-        ));
-
-        return lineMapper;
-    }
-
-    @Bean
-    public LineTokenizer movementTokenizer() {
-        final var tokenizer = new FixedLengthTokenizer();
-
-        tokenizer.setColumns(
-                new Range(1, 3)
-        );
-        tokenizer.setNames(
-                "type"
-        );
-
-        return tokenizer;
-    }
-
-    @Bean
-    public FieldSetMapper<Command> movementFieldSetMapper() {
-        return fieldSet -> new Move(
-                fieldSet.readString("type")
-        );
-    }
-
-    @Bean
     @StepScope
-    public FlatFileItemReader<Command> inputRouteReader(
-            @Value("#{jobParameters['input.file']}") final String inputPath
+    public FlatFileItemReader<Controls.Control> inputRouteReader(
+            @Value("#{jobParameters['input.file']}") final String inputPath,
+            @Qualifier("robotRouteLineMapper") final LineMapper<Controls.Control> robotRouteLineMapper
+
     ) {
-        return new FlatFileItemReaderBuilder<Command>()
+        return new FlatFileItemReaderBuilder<Controls.Control>()
                 .name("inputRouteReader")
                 .resource(new FileSystemResource(inputPath))
-                .lineMapper(robotRouteLineMapper())
+                .lineMapper(robotRouteLineMapper)
                 .build();
     }
 
     @Bean
-    public ItemProcessor<Command, String> routeProcessor() {
-        return o -> "test";
+    public ItemProcessor<Controls.Control, String> routeProcessor(
+            final ApplicationEventPublisher eventPublisher
+    ) {
+        return event -> {
+            eventPublisher.publishEvent(event);
+            return "test";
+        };
     }
 
     @Bean

@@ -16,7 +16,6 @@
         <module>service</module>
         <module>batch</module>
         <module>web</module>
-        <module>common</module>
     </modules>
 
 
