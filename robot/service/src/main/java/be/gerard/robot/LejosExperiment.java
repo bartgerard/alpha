@@ -39,7 +39,7 @@ public class LejosExperiment {
     private static void a() throws RemoteException, NotBoundException, MalformedURLException {
         // https://sourceforge.net/p/lejos/wiki/Remote%20access%20to%20an%20EV3/
 
-        RemoteEV3 ev3 = new RemoteEV3("192.168.1.100");
+        RemoteEV3 ev3 = new RemoteEV3("192.168.1.55");
         ev3.setDefault();
         Sound.beep();
         //final RMIRegulatedMotor m = ev3.createRegulatedMotor("B", 'L');
@@ -111,7 +111,7 @@ public class LejosExperiment {
     private static void e() throws IOException {
         // https://sourceforge.net/p/lejos/wiki/Remote%20access%20to%20an%20EV3/
 
-        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.100");
+        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.55");
         ev3.setDefault();
         // ev3.getLED().setPattern(EV3LED.COLOR_GREEN);
 
@@ -147,7 +147,7 @@ public class LejosExperiment {
     private static void f() throws IOException {
         // https://sourceforge.net/p/lejos/wiki/Remote%20access%20to%20an%20EV3/
 
-        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.100");
+        final RemoteRequestEV3 ev3 = new RemoteRequestEV3("192.168.1.55");
         ev3.setDefault();
 
         final ArcRotateMoveController pilot = ev3.createPilot(MoveController.WHEEL_SIZE_EV3, 10, "B", "C");
@@ -162,7 +162,7 @@ public class LejosExperiment {
     }
 
     private static void d() throws RemoteException, NotBoundException, MalformedURLException {
-        final RemoteEV3 ev3 = new RemoteEV3("192.168.1.100");
+        final RemoteEV3 ev3 = new RemoteEV3("192.168.1.55");
         //ev3.setDefault();
         Sound.beep();
 

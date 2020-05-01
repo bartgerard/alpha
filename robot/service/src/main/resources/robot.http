@@ -35,7 +35,7 @@ Content-Type: application/json
 
 {
   "radius": 20,
-  "angle": 180
+  "angle": 2
 }
 
 ###

@@ -84,3 +84,6 @@ Thumbs.db
 /western-empires/web/src/main/resources/public/
 
 **/node_modules/
+
+### Other ###
+*.log
