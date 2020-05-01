@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mega-empires"
+    }
+  },
+  "defaultProject": "mega-empires",
+  "cli": {
+    "analytics": "3bede71f-62c0-41fd-975d-9a6de1b2d699"
+  }
 }

@@ -97,3 +97,5 @@ OR
 # npm
 
     sudo npm install --unsafe-perm=true --allow-root
+    
+    sudo npm install --unsafe-perm -g @angular/cli
