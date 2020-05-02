@@ -1,5 +1,6 @@
+CAM,CAM1,10.5.5.9
 REG,EV3,main,4.32,10,B,C
-ARC,EV3,main,20,2
+ARC,EV3,main,-20,-180
 MOV,EV3,main,20
 ROT,EV3,main,-360
 DRG,EV3

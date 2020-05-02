@@ -25,7 +25,8 @@ public class RobotMapperConfig {
             RIGHT_MOTOR = "rightMotor",
             RADIUS = "radius",
             ANGLE = "angle",
-            DISTANCE = "distance";
+            DISTANCE = "distance",
+            IP = "ip";
 
     @Bean
     public LineMapper<Timelapse.Control> robotRouteLineMapper() {
@@ -34,6 +35,7 @@ public class RobotMapperConfig {
         final var defaultLineTokenizer = new DelimitedLineTokenizer();
 
         lineMapper.setTokenizers(Map.ofEntries(
+                Map.entry("CAM*", camRegistrationTokenizer()),
                 Map.entry("REG*", registrationTokenizer()),
                 Map.entry("ARC*", arcMovementTokenizer()),
                 Map.entry("MOV*", forwardMovementTokenizer()),
@@ -43,6 +45,7 @@ public class RobotMapperConfig {
         ));
 
         lineMapper.setFieldSetMappers(Map.ofEntries(
+                Map.entry("CAM*", cameraRegistrationFieldSetMapper()),
                 Map.entry("REG*", registrationFieldSetMapper()),
                 Map.entry("ARC*", arcMovementFieldSetMapper()),
                 Map.entry("MOV*", forwardMovementFieldSetMapper()),
@@ -51,6 +54,20 @@ public class RobotMapperConfig {
         ));
 
         return lineMapper;
+    }
+
+    @Bean
+    public LineTokenizer camRegistrationTokenizer() {
+        final var tokenizer = new DelimitedLineTokenizer();
+
+        tokenizer.setDelimiter(",");
+        tokenizer.setNames(
+                TYPE,
+                NAME,
+                IP
+        );
+
+        return tokenizer;
     }
 
     @Bean
@@ -131,8 +148,16 @@ public class RobotMapperConfig {
     }
 
     @Bean
+    public FieldSetMapper<Timelapse.Control> cameraRegistrationFieldSetMapper() {
+        return fieldSet -> Timelapse.RegisterCamera.builder()
+                .name(fieldSet.readString(NAME))
+                .ip(fieldSet.readString(IP))
+                .build();
+    }
+
+    @Bean
     public FieldSetMapper<Timelapse.Control> registrationFieldSetMapper() {
-        return fieldSet -> Timelapse.Register.builder()
+        return fieldSet -> Timelapse.RegisterEv3.builder()
                 .name(fieldSet.readString(NAME))
                 .pilotId(fieldSet.readString(PILOT_ID))
                 .pilotConfiguration(PilotConfiguration.builder()

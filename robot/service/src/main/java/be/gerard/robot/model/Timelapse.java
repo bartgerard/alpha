@@ -5,14 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 @NoArgsConstructor
-public class Timelapse {
+public final class Timelapse {
 
     public interface Control {
     }
 
     @Value
     @Builder
-    public static class Register implements Timelapse.Control {
+    public static class RegisterCamera implements Timelapse.Control {
+        String name;
+        String ip;
+    }
+
+    @Value
+    @Builder
+    public static class RegisterEv3 implements Timelapse.Control {
         String name;
         String pilotId;
         PilotConfiguration pilotConfiguration;

@@ -16,6 +16,11 @@
         <!-- 3rd Party -->
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.bdeneuter</groupId>
             <artifactId>lejos-ev3-api</artifactId>
         </dependency>
