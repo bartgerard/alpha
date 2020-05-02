@@ -1,6 +1,6 @@
 package be.gerard.robot.web;
 
-import be.gerard.robot.model.Controls;
+import be.gerard.robot.model.Movement;
 import be.gerard.robot.model.PilotConfiguration;
 import be.gerard.robot.service.RobotService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +45,7 @@ public class RobotRestController {
     public void move(
             @PathVariable("name") final String name,
             @PathVariable("pilotId") final String pilotId,
-            @RequestBody final Controls.TravelArc command
+            @RequestBody final Movement.TravelArc command
     ) {
         robotService.handle(name, pilotId, command);
     }
@@ -54,7 +54,7 @@ public class RobotRestController {
     public void move(
             @PathVariable("name") final String name,
             @PathVariable("pilotId") final String pilotId,
-            @RequestBody final Controls.MoveForward command
+            @RequestBody final Movement.MoveForward command
     ) {
         robotService.handle(name, pilotId, command);
     }
@@ -63,7 +63,7 @@ public class RobotRestController {
     public void move(
             @PathVariable("name") final String name,
             @PathVariable("pilotId") final String pilotId,
-            @RequestBody final Controls.Rotate command
+            @RequestBody final Movement.Rotate command
     ) {
         robotService.handle(name, pilotId, command);
     }

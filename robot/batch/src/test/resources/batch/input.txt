@@ -1,7 +1,5 @@
 REG,EV3,main,4.32,10,B,C
-REG,EV3,main,4.32,10,B,C
-REG,EV3,main,4.32,10,B,C
-REG,EV3,main,4.32,10,B,C
-MOV
-MOV
-MOV
+ARC,EV3,main,20,2
+MOV,EV3,main,20
+ROT,EV3,main,-360
+DRG,EV3

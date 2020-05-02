@@ -1,6 +1,6 @@
 package be.gerard.robot.config;
 
-import be.gerard.robot.model.Controls;
+import be.gerard.robot.model.Timelapse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -53,12 +53,12 @@ public class RobotJobConfig {
 
     @Bean
     public Step step1(
-            @Qualifier("inputRouteReader") final FlatFileItemReader<Controls.Control> itemReader,
-            @Qualifier("routeProcessor") final ItemProcessor<Controls.Control, String> processor,
+            @Qualifier("inputRouteReader") final FlatFileItemReader<Timelapse.Control> itemReader,
+            @Qualifier("routeProcessor") final ItemProcessor<Timelapse.Control, String> processor,
             @Qualifier("outputRouteWriter") final FlatFileItemWriter<String> itemWriter
     ) {
         return stepBuilderFactory.get("step1")
-                .<Controls.Control, String>chunk(10)
+                .<Timelapse.Control, String>chunk(10)
                 .reader(itemReader)
                 .processor(processor)
                 .writer(itemWriter)
@@ -67,12 +67,12 @@ public class RobotJobConfig {
 
     @Bean
     @StepScope
-    public FlatFileItemReader<Controls.Control> inputRouteReader(
+    public FlatFileItemReader<Timelapse.Control> inputRouteReader(
             @Value("#{jobParameters['input.file']}") final String inputPath,
-            @Qualifier("robotRouteLineMapper") final LineMapper<Controls.Control> robotRouteLineMapper
+            @Qualifier("robotRouteLineMapper") final LineMapper<Timelapse.Control> robotRouteLineMapper
 
     ) {
-        return new FlatFileItemReaderBuilder<Controls.Control>()
+        return new FlatFileItemReaderBuilder<Timelapse.Control>()
                 .name("inputRouteReader")
                 .resource(new FileSystemResource(inputPath))
                 .lineMapper(robotRouteLineMapper)
@@ -80,12 +80,16 @@ public class RobotJobConfig {
     }
 
     @Bean
-    public ItemProcessor<Controls.Control, String> routeProcessor(
+    public ItemProcessor<Timelapse.Control, String> routeProcessor(
             final ApplicationEventPublisher eventPublisher
     ) {
         return event -> {
-            eventPublisher.publishEvent(event);
-            return "test";
+            try {
+                eventPublisher.publishEvent(event);
+                return event + "\n> DONE";
+            } catch (Exception e) {
+                return event + "\n> FAILED";
+            }
         };
     }
 

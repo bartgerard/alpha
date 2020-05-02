@@ -1,14 +1,13 @@
 package be.gerard.robot.service;
 
-import be.gerard.robot.model.Controls;
 import be.gerard.robot.model.Ev3Robot;
+import be.gerard.robot.model.Movement;
 import be.gerard.robot.model.PilotConfiguration;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
 import lejos.remote.ev3.RemoteRequestEV3;
 import lejos.robotics.navigation.ArcRotateMoveController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class RobotService {
 
     private static final Map<String, Ev3Robot> ROBOT_MAP = new ConcurrentHashMap<>();
 
-    private static Optional<Ev3Robot> findByName(
+    static Optional<Ev3Robot> findByName(
             final String name
     ) {
         return Optional.ofNullable(ROBOT_MAP.get(name));
@@ -129,37 +128,11 @@ public class RobotService {
     public void handle(
             final String name,
             final String pilotId,
-            final Controls.Control.Movement command
+            final Movement.Control command
     ) {
         findByName(name)
                 .flatMap(robot -> robot.findById(pilotId))
                 .ifPresent(command::execute);
-    }
-
-    @EventListener
-    public void handle(
-            final Controls.Register event
-    ) {
-        if (findByName(event.getName()).isEmpty()) {
-            registerByName(event.getName());
-        }
-
-        configureByName(
-                event.getName(),
-                event.getPilotId(),
-                event.getPilotConfiguration()
-        );
-    }
-
-    @EventListener
-    public void handle(
-            final Controls.MoveForward event
-    ) {
-        //handle(
-        //        event.getName(),
-        //        event.getPilotId(),
-        //        event
-        //);
     }
 
 }

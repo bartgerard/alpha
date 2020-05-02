@@ -1,14 +1,12 @@
 package be.gerard.robot.config;
 
-import be.gerard.robot.model.Controls;
 import be.gerard.robot.model.PilotConfiguration;
+import be.gerard.robot.model.Timelapse;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.mapping.PatternMatchingCompositeLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
 import org.springframework.batch.item.file.transform.LineTokenizer;
-import org.springframework.batch.item.file.transform.Range;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,21 +15,39 @@ import java.util.Map;
 @Configuration
 public class RobotMapperConfig {
 
+    public static final String
+            TYPE = "type",
+            NAME = "name",
+            PILOT_ID = "pilotId",
+            WHEEL_DIAMETER = "wheelDiameter",
+            TRACK_WIDTH = "trackWidth",
+            LEFT_MOTOR = "leftMotor",
+            RIGHT_MOTOR = "rightMotor",
+            RADIUS = "radius",
+            ANGLE = "angle",
+            DISTANCE = "distance";
+
     @Bean
-    public LineMapper<Controls.Control> robotRouteLineMapper() {
-        final var lineMapper = new PatternMatchingCompositeLineMapper<Controls.Control>();
+    public LineMapper<Timelapse.Control> robotRouteLineMapper() {
+        final var lineMapper = new PatternMatchingCompositeLineMapper<Timelapse.Control>();
 
         final var defaultLineTokenizer = new DelimitedLineTokenizer();
 
         lineMapper.setTokenizers(Map.ofEntries(
                 Map.entry("REG*", registrationTokenizer()),
-                Map.entry("MOV*", movementTokenizer()),
+                Map.entry("ARC*", arcMovementTokenizer()),
+                Map.entry("MOV*", forwardMovementTokenizer()),
+                Map.entry("ROT*", rotateMovementTokenizer()),
+                Map.entry("DRG*", deRegistrationTokenizer()),
                 Map.entry("*", defaultLineTokenizer)
         ));
 
         lineMapper.setFieldSetMappers(Map.ofEntries(
                 Map.entry("REG*", registrationFieldSetMapper()),
-                Map.entry("MOV*", movementFieldSetMapper())
+                Map.entry("ARC*", arcMovementFieldSetMapper()),
+                Map.entry("MOV*", forwardMovementFieldSetMapper()),
+                Map.entry("ROT*", rotateMovementFieldSetMapper()),
+                Map.entry("DRG*", deRegistrationFieldSetMapper())
         ));
 
         return lineMapper;
@@ -43,52 +59,125 @@ public class RobotMapperConfig {
 
         tokenizer.setDelimiter(",");
         tokenizer.setNames(
-                "type",
-                "name",
-                "pilotId",
-                "wheelDiameter",
-                "trackWidth",
-                "leftMotor",
-                "rightMotor"
+                TYPE,
+                NAME,
+                PILOT_ID,
+                WHEEL_DIAMETER,
+                TRACK_WIDTH,
+                LEFT_MOTOR,
+                RIGHT_MOTOR
         );
 
         return tokenizer;
     }
 
     @Bean
-    public LineTokenizer movementTokenizer() {
-        final var tokenizer = new FixedLengthTokenizer();
+    public LineTokenizer arcMovementTokenizer() {
+        final var tokenizer = new DelimitedLineTokenizer();
 
-        tokenizer.setColumns(
-                new Range(1, 3)
-        );
+        tokenizer.setDelimiter(",");
         tokenizer.setNames(
-                "type"
+                TYPE,
+                NAME,
+                PILOT_ID,
+                RADIUS,
+                ANGLE
         );
 
         return tokenizer;
     }
 
     @Bean
-    public FieldSetMapper<Controls.Control> registrationFieldSetMapper() {
-        return fieldSet -> new Controls.Register(
-                fieldSet.readString("name"),
-                fieldSet.readString("pilotId"),
-                PilotConfiguration.builder()
-                        .wheelDiameter(fieldSet.readInt("wheelDiameter"))
-                        .trackWidth(fieldSet.readInt("trackWidth"))
-                        .leftMotor(fieldSet.readString("leftMotor"))
-                        .rightMotor(fieldSet.readString("rightMotor"))
-                        .build()
+    public LineTokenizer forwardMovementTokenizer() {
+        final var tokenizer = new DelimitedLineTokenizer();
+
+        tokenizer.setDelimiter(",");
+        tokenizer.setNames(
+                TYPE,
+                NAME,
+                PILOT_ID,
+                DISTANCE
         );
+
+        return tokenizer;
     }
 
     @Bean
-    public FieldSetMapper<Controls.Control> movementFieldSetMapper() {
-        return fieldSet -> new Controls.TravelArc(
-                0,
-                0
+    public LineTokenizer rotateMovementTokenizer() {
+        final var tokenizer = new DelimitedLineTokenizer();
+
+        tokenizer.setDelimiter(",");
+        tokenizer.setNames(
+                TYPE,
+                NAME,
+                PILOT_ID,
+                ANGLE
         );
+
+        return tokenizer;
+    }
+
+    @Bean
+    public LineTokenizer deRegistrationTokenizer() {
+        final var tokenizer = new DelimitedLineTokenizer();
+
+        tokenizer.setDelimiter(",");
+        tokenizer.setNames(
+                TYPE,
+                NAME
+        );
+
+        return tokenizer;
+    }
+
+    @Bean
+    public FieldSetMapper<Timelapse.Control> registrationFieldSetMapper() {
+        return fieldSet -> Timelapse.Register.builder()
+                .name(fieldSet.readString(NAME))
+                .pilotId(fieldSet.readString(PILOT_ID))
+                .pilotConfiguration(PilotConfiguration.builder()
+                        .wheelDiameter(fieldSet.readInt(WHEEL_DIAMETER))
+                        .trackWidth(fieldSet.readInt(TRACK_WIDTH))
+                        .leftMotor(fieldSet.readString(LEFT_MOTOR))
+                        .rightMotor(fieldSet.readString(RIGHT_MOTOR))
+                        .build()
+                )
+                .build();
+    }
+
+    @Bean
+    public FieldSetMapper<Timelapse.Control> arcMovementFieldSetMapper() {
+        return fieldSet -> Timelapse.TravelArc.builder()
+                .name(fieldSet.readString(NAME))
+                .pilotId(fieldSet.readString(PILOT_ID))
+                .radius(fieldSet.readDouble(RADIUS))
+                .angle(fieldSet.readDouble(ANGLE))
+                .build();
+    }
+
+    @Bean
+    public FieldSetMapper<Timelapse.Control> forwardMovementFieldSetMapper() {
+        return fieldSet -> Timelapse.MoveForward.builder()
+                .name(fieldSet.readString(NAME))
+                .pilotId(fieldSet.readString(PILOT_ID))
+                .distance(fieldSet.readDouble(DISTANCE))
+                .build();
+    }
+
+    @Bean
+    public FieldSetMapper<Timelapse.Control> rotateMovementFieldSetMapper() {
+        return fieldSet -> Timelapse.Rotate.builder()
+                .name(fieldSet.readString(NAME))
+                .pilotId(fieldSet.readString(PILOT_ID))
+                .angle(fieldSet.readDouble(ANGLE))
+                .build();
+    }
+
+    @Bean
+    public FieldSetMapper<Timelapse.Control> deRegistrationFieldSetMapper() {
+        return fieldSet -> Timelapse.Deregister.builder()
+                .name(fieldSet.readString(NAME))
+                .build();
     }
 
 }
