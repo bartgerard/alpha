@@ -20,6 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RobotService {
 
+    private static final String DEFAULT_PILOT_ID = "main";
+
     private static final Map<String, Ev3Robot> ROBOT_MAP = new ConcurrentHashMap<>();
 
     static Optional<Ev3Robot> findByName(
@@ -101,6 +103,17 @@ public class RobotService {
 
     public void configureByName(
             final String name,
+            final PilotConfiguration configuration
+    ) {
+        configureByName(
+                name,
+                DEFAULT_PILOT_ID,
+                configuration
+        );
+    }
+
+    public void configureByName(
+            final String name,
             final String pilotId,
             final PilotConfiguration configuration
     ) {
@@ -123,6 +136,17 @@ public class RobotService {
                 );
 
         robot.getPilotMap().put(pilotId, pilot);
+    }
+
+    public void handle(
+            final String name,
+            final Movement.Control command
+    ) {
+        handle(
+                name,
+                DEFAULT_PILOT_ID,
+                command
+        );
     }
 
     public void handle(

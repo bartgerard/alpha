@@ -13,11 +13,6 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:8080/robots/registrations/EV3
-Accept: application/json
-
-###
-
 PUT http://localhost:8080/robots/EV3/pilots/main
 Content-Type: application/json
 
@@ -57,3 +52,6 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE http://localhost:8080/robots/registrations/EV3
+Accept: application/json

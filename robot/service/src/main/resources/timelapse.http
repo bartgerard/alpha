@@ -1,0 +1,82 @@
+
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.32,
+      "trackWidth": 10,
+      "leftMotor": "B",
+      "rightMotor": "C"
+    }
+  },
+  "robotActions": {
+    "EV3": [
+      {
+        "point": {
+          "x": 0,
+          "y": 0
+        },
+        "vector": {
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "point": {
+          "x": 0,
+          "y": 10
+        },
+        "vector": {
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "point": {
+          "x": 0,
+          "y": 10
+        },
+        "vector": {
+          "x": 1,
+          "y": 0
+        }
+      }
+    ]
+  }
+}
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.32,
+      "trackWidth": 10,
+      "leftMotor": "B",
+      "rightMotor": "C"
+    }
+  },
+  "cameras": {
+    "CAM0": "10.5.5.9"
+  },
+  "robotActions": {
+    "EV3": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 0,
+        "y": 10
+      }
+    ]
+  }
+}
