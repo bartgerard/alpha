@@ -1,9 +1,10 @@
 package be.gerard.robot.service;
 
 import be.gerard.robot.model.Camera;
+import be.gerard.robot.model.MediaList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Map;
@@ -16,8 +17,6 @@ public class CameraService {
 
     private static final Map<String, WebClient> CAMERA_IP_MAP = new ConcurrentHashMap<>();
 
-    private RestTemplate restTemplate;
-
     static Optional<WebClient> findByName(
             final String name
     ) {
@@ -28,7 +27,7 @@ public class CameraService {
             final String name,
             final String ip
     ) {
-        final var webClient = WebClient.create(String.format("http://%s/gp/gpControl", ip));
+        final var webClient = WebClient.create(String.format("http://%s/gp", ip));
         CAMERA_IP_MAP.put(name, webClient);
     }
 
@@ -38,7 +37,7 @@ public class CameraService {
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/setting/53/{mode}")
+                        .path("/gpControl/setting/53/{mode}")
                         .build(Map.of(
                                 "mode", mode.getCode()
                         ))
@@ -56,7 +55,7 @@ public class CameraService {
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/command/mode")
+                        .path("/gpControl/command/mode")
                         .queryParam("p", mode.getCode())
                         .build()
                 )
@@ -73,7 +72,7 @@ public class CameraService {
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/command/sub_mode")
+                        .path("/gpControl/command/sub_mode")
                         .queryParam("mode", subMode.getMode().getCode())
                         .queryParam("sub_mode", subMode.getSubCode())
                         .build()
@@ -91,7 +90,7 @@ public class CameraService {
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/command/shutter")
+                        .path("/gpControl/command/shutter")
                         .queryParam("p", action.getCode())
                         .build()
                 )
@@ -106,7 +105,7 @@ public class CameraService {
             final String name
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
-                .uri("/command/system/sleep")
+                .uri("/gpControl/command/system/sleep")
                 .exchange()
                 .block()
                 .bodyToMono(String.class)
@@ -118,12 +117,62 @@ public class CameraService {
             final String name
     ) {
         findByName(name).ifPresent(webClient -> webClient.get()
-                .uri("/command/wireless/pair/complete?success=1&deviceName=DESKTOP")
+                .uri("/gpControl/command/wireless/pair/complete?success=1&deviceName=DESKTOP")
                 .exchange()
                 .block()
                 .bodyToMono(String.class)
                 .block()
         );
+    }
+
+    public void changeSetting(
+            final String name,
+            final Camera.Setting setting
+    ) {
+        findByName(name).ifPresent(webClient -> webClient.get()
+                .uri(setting.toUrl())
+                .exchange()
+                .block()
+                .bodyToMono(String.class)
+                .block()
+        );
+    }
+
+    public MediaList getMediaList(
+            final String name
+    ) {
+        return findByName(name).map(webClient -> webClient.get()
+                .uri("/gpMediaList")
+                .exchange()
+                .block()
+                .bodyToMono(MediaList.class)
+                .block()
+        )
+                .orElseThrow(() -> new IllegalArgumentException("camera not found"));
+    }
+
+    public byte[] getThumbnail(
+            final String name,
+            final String d,
+            final String n
+    ) {
+        return findByName(name).map(webClient -> webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/gpMediaMetadata")
+                        .queryParam("p", String.format(
+                                "%s/%s",
+                                d,
+                                n
+                        ))
+                        .build()
+                )
+                .accept(MediaType.ALL)
+                .exchange()
+                .block()
+                .bodyToMono(byte[].class)
+                .block()
+        )
+                .orElseThrow(() -> new IllegalArgumentException("camera not found"));
     }
 
 }
