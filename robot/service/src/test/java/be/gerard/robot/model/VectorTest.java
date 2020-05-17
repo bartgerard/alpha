@@ -22,21 +22,31 @@ public class VectorTest {
 
         final var v45 = Vector.of(1, 1);
 
+        final var v225 = Vector.of(-1, -1);
+
         Assertions.assertThat(Vector.magnitude(v45)).isEqualTo(1.41, PRECISION);
 
-        Assertions.assertThat(Math.toDegrees(Vector.angle(V1, V2))).isEqualTo(90);
-        Assertions.assertThat(Math.toDegrees(Vector.angle(V2, V1))).isEqualTo(90);
+        Assertions.assertThat(Vector.angle(V1, V2).getDegrees()).isEqualTo(90);
+        Assertions.assertThat(Vector.angle(V2, V1).getDegrees()).isEqualTo(90);
 
-        Assertions.assertThat(Math.toDegrees(V1.angle2d())).isEqualTo(0);
-        Assertions.assertThat(Math.toDegrees(V2.angle2d())).isEqualTo(90);
-        Assertions.assertThat(Math.toDegrees(v3.angle2d())).isEqualTo(180);
-        Assertions.assertThat(Math.toDegrees(v4.angle2d())).isEqualTo(-90);
+        Assertions.assertThat(V1.angle2d().getDegrees()).isEqualTo(0);
+        Assertions.assertThat(V2.angle2d().getDegrees()).isEqualTo(90);
+        Assertions.assertThat(v3.angle2d().getDegrees()).isEqualTo(180);
+        Assertions.assertThat(v4.angle2d().getDegrees()).isEqualTo(-90);
 
-        Assertions.assertThat(Math.toDegrees(Vector.angle2d(V1, V2))).isEqualTo(-90);
-        Assertions.assertThat(Math.toDegrees(Vector.angle2d(V1, v3))).isEqualTo(-180);
-        Assertions.assertThat(Math.toDegrees(Vector.angle2d(v3, V1))).isEqualTo(180);
-        Assertions.assertThat(Math.toDegrees(Vector.angle2d(V1, v4))).isEqualTo(90);
+        Assertions.assertThat(Vector.angle2d(V1, V2).getDegrees()).isEqualTo(-90);
+        Assertions.assertThat(Vector.angle2d(V1, v3).getDegrees()).isEqualTo(-180);
+        Assertions.assertThat(Vector.angle2d(v3, V1).getDegrees()).isEqualTo(180);
+        Assertions.assertThat(Vector.angle2d(V1, v4).getDegrees()).isEqualTo(90);
 
+        Assertions.assertThat(Vector.angle2d(V1, v225).getDegrees()).isEqualTo(135);
+        Assertions.assertThat(Vector.angle2d(V2, v225).getDegrees()).isEqualTo(225);
+
+        Assertions.assertThat(Vector.angle2d(V1, v225).toSmallestAngle().getDegrees()).isEqualTo(135);
+        Assertions.assertThat(Vector.angle2d(V2, v225).toSmallestAngle().getDegrees()).isEqualTo(-135);
+
+        Assertions.assertThat(Vector.angle2d(V1, v225).toSmallestAngle().isObtuse()).isTrue();
+        Assertions.assertThat(Vector.angle2d(V2, v225).toSmallestAngle().isObtuse()).isTrue();
     }
 
     @Test

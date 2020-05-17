@@ -1,6 +1,8 @@
 package be.gerard.robot.service;
 
+import be.gerard.robot.model.Angle;
 import be.gerard.robot.model.Camera;
+import be.gerard.robot.model.KeyFrame;
 import be.gerard.robot.model.Scene;
 import be.gerard.robot.model.Timelapse;
 import be.gerard.robot.model.Vector;
@@ -39,28 +41,28 @@ public class DirectorService {
 
 
         final var robotName = "EV3";
-        final var actions = scene.getRobotActions().get(robotName);
+        final var actions = scene.getKeyFrames();
 
-        Scene.RobotAction previousAction = null;
+        KeyFrame previousAction = null;
 
-        for (final Scene.RobotAction action : actions) {
+        for (final KeyFrame action : actions) {
             if (Objects.isNull(previousAction)) {
                 previousAction = action;
                 continue;
             }
 
             final var angleBetweenVectors = Vector.angle2d(
-                    previousAction.getVector(),
-                    action.getVector()
+                    previousAction.getDirection(),
+                    action.getDirection()
             );
             final var vector = previousAction.getPoint().min(action.getPoint());
             final var angleBetweenPoints = vector.angle2d();
-            final var isSameAngle = Vector.isSameAngle(
+            final var isSameAngle = Angle.isSameAngle(
                     angleBetweenVectors,
                     angleBetweenPoints
             );
 
-            if (angleBetweenVectors == 0) {
+            if (angleBetweenVectors.isNullAngle()) {
 
                 if (isSameAngle) {
                     // MOVE FORWARD

@@ -2,6 +2,7 @@ package be.gerard.robot.service;
 
 import be.gerard.robot.RobotApplication;
 import be.gerard.robot.model.Camera;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {
@@ -21,22 +20,23 @@ public class CameraServiceTest {
     @Autowired
     private CameraService cameraService;
 
+    @Disabled
     @Test
     public void test() throws IOException {
         cameraService.registerByName("CAM0", "10.5.5.9");
 
 
-        final var mediaList = cameraService.getMediaList("CAM0");
-        final var thumbnail = cameraService.getThumbnail(
-                "CAM0",
-                "100GOPRO",
-                "GOPR0344.JPG"
-        );
-
-        Files.write(
-                Paths.get("./test.jpg"),
-                thumbnail
-        );
+        //final var mediaList = cameraService.getMediaList("CAM0");
+        //final var thumbnail = cameraService.getThumbnail(
+        //        "CAM0",
+        //        "100GOPRO",
+        //        "GOPR0344.JPG"
+        //);
+//
+        //Files.write(
+        //        Paths.get("./test.jpg"),
+        //        thumbnail
+        //);
 
         cameraService.changeDefaultBootMode("CAM0", Camera.Mode.PHOTO);
         cameraService.changeMode("CAM0", Camera.Mode.PHOTO);

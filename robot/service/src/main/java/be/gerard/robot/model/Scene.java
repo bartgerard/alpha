@@ -15,12 +15,5 @@ public class Scene {
     @Singular
     Map<String, String> cameras;
     @Singular
-    Map<String, List<RobotAction>> robotActions;
-
-    @Value
-    @Builder
-    public static class RobotAction {
-        Point2d point;
-        Vector vector;
-    }
+    List<KeyFrame> keyFrames;
 }

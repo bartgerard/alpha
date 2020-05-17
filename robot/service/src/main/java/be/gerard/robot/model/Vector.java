@@ -41,39 +41,40 @@ public class Vector {
         return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
     }
 
-    public static double angle(
+    public static Angle angle(
             final Vector v1,
             final Vector v2
     ) {
-        return Math.acos(dot(v1, v2) / (magnitude(v1) * magnitude(v2)));
+        return Angle.of(Math.acos(
+                dot(v1, v2) / (magnitude(v1) * magnitude(v2))
+        ));
     }
 
-    public static double angle2d(
+    public static Angle angle2d(
             final Vector v1,
             final Vector v2
     ) {
         final var angle1 = v1.angle2d();
         final var angle2 = v2.angle2d();
 
-        return angle1 - angle2;
+        return angle1.min(angle2);
     }
 
-    public static boolean isSameAngle(
-            final double angle1,
-            final double angle2
+    public static Angle angle2d(
+            final Vector vector
     ) {
-        return Math.toDegrees(angle1) == Math.toDegrees(angle2);
+        return Angle.of(Math.atan2(
+                vector.y,
+                vector.x
+        ));
     }
 
     public Vector normalize() {
         return normalize(this);
     }
 
-    public double angle2d() {
-        return Math.atan2(
-                this.y,
-                this.x
-        );
+    public Angle angle2d() {
+        return angle2d(this);
     }
 
 }
