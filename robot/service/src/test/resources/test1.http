@@ -1,0 +1,242 @@
+
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.8,
+      "trackWidth": 14,
+      "leftMotor": "B",
+      "rightMotor": "C",
+      "angularSpeed": 5.5125,
+      "linearSpeed": 1.25,
+      "linearAcceleration": 50
+    }
+  },
+  "cameras": {
+  },
+  "keyFrames": [
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 20
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 1,
+        "y": 0
+      }
+    }
+  ]
+}
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.32,
+      "trackWidth": 10,
+      "leftMotor": "B",
+      "rightMotor": "C"
+    }
+  },
+  "cameras": {
+    "CAM0": "10.5.5.9"
+  },
+  "keyFrames": [
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 1,
+        "y": 0
+      }
+    }
+  ]
+}
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.8,
+      "trackWidth": 14,
+      "leftMotor": "B",
+      "rightMotor": "C",
+      "angularSpeed": 5.5125,
+      "linearSpeed": 1.25
+    }
+  },
+  "cameras": {
+  },
+  "keyFrames": [
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 1,
+        "y": 0
+      }
+    }
+  ]
+}
+
+###
+
+PUT http://localhost:8080/timelapse/execute
+Content-Type: application/json
+
+{
+  "robots": {
+    "EV3": {
+      "wheelDiameter": 4.32,
+      "trackWidth": 10,
+      "leftMotor": "B",
+      "rightMotor": "C"
+    }
+  },
+  "cameras": {
+    "CAM0": "10.5.5.9"
+  },
+  "keyFrames": [
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 0
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "robotName": "EV3",
+      "point": {
+        "x": 0,
+        "y": 10
+      },
+      "direction": {
+        "x": 1,
+        "y": 0
+      }
+    }
+  ]
+}

@@ -27,8 +27,10 @@ public class CameraService {
             final String name,
             final String ip
     ) {
-        final var webClient = WebClient.create(String.format("http://%s/gp", ip));
-        CAMERA_IP_MAP.put(name, webClient);
+        CAMERA_IP_MAP.computeIfAbsent(
+                name,
+                key -> WebClient.create(String.format("http://%s/gp", ip))
+        );
     }
 
     public void changeDefaultBootMode(

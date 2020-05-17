@@ -26,4 +26,22 @@ public class Point2d {
         );
     }
 
+    public Line2d withDirection(
+            final Vector direction
+    ) {
+        return Line2d.of(
+                this,
+                direction
+        );
+    }
+
+    public Point2d add(
+            final Vector vector
+    ) {
+        return Point2d.of(
+                this.x + vector.getX(),
+                this.y + vector.getY()
+        );
+    }
+
 }

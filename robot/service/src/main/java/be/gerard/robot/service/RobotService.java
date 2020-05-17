@@ -6,7 +6,6 @@ import be.gerard.robot.model.PilotConfiguration;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
 import lejos.remote.ev3.RemoteRequestEV3;
-import lejos.robotics.navigation.ArcRotateMoveController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -42,22 +41,24 @@ public class RobotService {
     public String registerByName(
             final String name
     ) {
-        final String ip = findIpByName(name)
-                .orElseThrow(() -> new IllegalArgumentException(String.format(
-                        "robot not found [name=%s]",
-                        name
-                )));
+        return ROBOT_MAP.computeIfAbsent(
+                name,
+                robotName -> {
+                    final String ip = findIpByName(robotName)
+                            .orElseThrow(() -> new IllegalArgumentException(String.format(
+                                    "robot not found [name=%s]",
+                                    robotName
+                            )));
 
-        final Ev3Robot robot = connectByIp(ip)
-                .orElseThrow(() -> new IllegalStateException(String.format(
-                        "robot not connected [name=%s,ip=%s]",
-                        name,
-                        ip
-                )));
-
-        ROBOT_MAP.put(name, robot);
-
-        return ip;
+                    return connectByIp(ip)
+                            .orElseThrow(() -> new IllegalStateException(String.format(
+                                    "robot not connected [name=%s,ip=%s]",
+                                    robotName,
+                                    ip
+                            )));
+                }
+        )
+                .getIp();
     }
 
     private Optional<String> findIpByName(
@@ -119,23 +120,25 @@ public class RobotService {
     ) {
         final Ev3Robot robot = getByName(name);
 
-        if (robot.getPilotMap().containsKey(pilotId)) {
-            throw new IllegalArgumentException(String.format(
-                    "robot already contains the given pilotId [name=%s,pilotId=%s]",
-                    name,
-                    pilotId
-            ));
-        }
+        robot.getPilotMap()
+                .computeIfAbsent(
+                        pilotId,
+                        pid -> {
+                            final var pilot = robot.getEv3()
+                                    .createPilot(
+                                            configuration.getWheelDiameter(),
+                                            configuration.getTrackWidth(),
+                                            configuration.getLeftMotor(),
+                                            configuration.getRightMotor()
+                                    );
 
-        final ArcRotateMoveController pilot = robot.getEv3()
-                .createPilot(
-                        configuration.getWheelDiameter(),
-                        configuration.getTrackWidth(),
-                        configuration.getLeftMotor(),
-                        configuration.getRightMotor()
+                            pilot.setAngularSpeed(configuration.getAngularSpeed());
+                            pilot.setLinearSpeed(configuration.getLinearSpeed());
+                            pilot.setLinearAcceleration(configuration.getLinearAcceleration());
+
+                            return pilot;
+                        }
                 );
-
-        robot.getPilotMap().put(pilotId, pilot);
     }
 
     public void handle(

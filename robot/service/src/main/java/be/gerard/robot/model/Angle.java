@@ -68,6 +68,12 @@ public class Angle {
         return angle.radian == 0;
     }
 
+    public static boolean isStraight(
+            final Angle angle
+    ) {
+        return angle.radian == Math.PI;
+    }
+
     public Angle toSmallestAngle() {
         return toSmallestAngle(this);
     }
@@ -88,7 +94,15 @@ public class Angle {
         return isNullAngle(this);
     }
 
-    public double getDegrees() {
+    public boolean isStraight() {
+        return isStraight(this);
+    }
+
+    public double toRadians() {
+        return radian;
+    }
+
+    public double toDegrees() {
         return Math.toDegrees(radian);
     }
 

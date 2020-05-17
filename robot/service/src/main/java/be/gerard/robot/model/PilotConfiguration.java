@@ -12,4 +12,7 @@ public class PilotConfiguration {
     double trackWidth;
     String leftMotor;
     String rightMotor;
+    double angularSpeed = 202.1796417236328; // degrees per second
+    double linearSpeed = 24.700902938842773; // cm per second
+    double linearAcceleration = 98; // chosen unit / s^2
 }
