@@ -15,5 +15,5 @@ public class Scene {
     @Singular
     Map<String, String> cameras;
     @Singular
-    List<KeyFrame> keyFrames;
+    Map<String, List<KeyFrame>> keyFrames;
 }
