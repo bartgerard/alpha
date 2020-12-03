@@ -5,7 +5,8 @@ import {TeamsComponent} from './component/teams/teams.component';
 import {HttpClientModule} from '@angular/common/http';
 import {QuizComponent} from './component/quiz/quiz.component';
 import {QuestionComponent} from './component/question/question.component';
-import {ButtonModule, InputTextModule} from 'primeng';
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
 import {AnswerComponent} from './component/answer/answer.component';
 import {FormsModule} from '@angular/forms';
 

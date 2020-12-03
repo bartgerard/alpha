@@ -99,8 +99,13 @@ OR
     sudo npm install --unsafe-perm=true --allow-root
     
     sudo npm install --unsafe-perm -g @angular/cli
+
+    sudo npm update
     
 # CSS
 
     http://getbem.com/introduction/
     
+# Angular
+
+    https://update.angular.io/

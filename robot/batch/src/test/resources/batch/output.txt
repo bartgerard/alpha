@@ -1,0 +1,12 @@
+Timelapse.RegisterCamera(name=CAM1, ip=10.5.5.9)
+> FAILED
+Timelapse.RegisterEv3(name=EV3, pilotId=main, pilotConfiguration=PilotConfiguration(wheelDiameter=4.0, trackWidth=10.0, leftMotor=B, rightMotor=C, angularSpeed=202.1796417236328, linearSpeed=24.700902938842773, linearAcceleration=98.0))
+> FAILED
+Timelapse.TravelArc(name=EV3, pilotId=main, radius=-20.0, angle=-180.0)
+> DONE
+Timelapse.MoveForward(name=EV3, pilotId=main, distance=20.0)
+> DONE
+Timelapse.Rotate(name=EV3, pilotId=main, angle=-360.0)
+> DONE
+Timelapse.Deregister(name=EV3)
+> FAILED
