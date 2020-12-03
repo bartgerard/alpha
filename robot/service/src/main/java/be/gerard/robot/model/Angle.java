@@ -25,17 +25,7 @@ public class Angle {
     public static Angle toSmallestAngle(
             final Angle angle
     ) {
-        if (Math.abs(angle.radian) <= Math.PI) {
-            return angle;
-        }
-
-        final var modulo360 = angle.radian % (Math.PI * 2);
-
-        return Angle.of(
-                modulo360 > Math.PI
-                        ? modulo360 - Math.PI * 2
-                        : modulo360
-        );
+        return angle.toSmallestAngle();
     }
 
     /**
@@ -44,7 +34,7 @@ public class Angle {
     public static boolean isObtuse(
             final Angle angle
     ) {
-        return Math.abs(angle.radian) > Math.PI * 0.5;
+        return angle.isObtuse();
     }
 
     /**
@@ -53,49 +43,59 @@ public class Angle {
     public static boolean isAcute(
             final Angle angle
     ) {
-        return Math.abs(angle.radian) < Math.PI * 0.5;
+        return angle.isAcute();
     }
 
     public static boolean isRight(
             final Angle angle
     ) {
-        return Math.abs(angle.radian) == Math.PI * 0.5;
+        return angle.isRight();
     }
 
     public static boolean isNullAngle(
             final Angle angle
     ) {
-        return angle.radian == 0;
+        return angle.isNullAngle();
     }
 
     public static boolean isStraight(
             final Angle angle
     ) {
-        return angle.radian == Math.PI;
+        return angle.isStraight();
     }
 
     public Angle toSmallestAngle() {
-        return toSmallestAngle(this);
+        if (Math.abs(this.radian) <= Math.PI) {
+            return this;
+        }
+
+        final var modulo360 = this.radian % (Math.PI * 2);
+
+        return Angle.of(
+                modulo360 > Math.PI
+                        ? modulo360 - Math.PI * 2
+                        : modulo360
+        );
     }
 
     public boolean isObtuse() {
-        return isObtuse(this);
+        return Math.abs(this.radian) > Math.PI * 0.5;
     }
 
     public boolean isAcute() {
-        return isAcute(this);
+        return Math.abs(this.radian) < Math.PI * 0.5;
     }
 
     public boolean isRight() {
-        return isRight(this);
+        return Math.abs(this.radian) == Math.PI * 0.5;
     }
 
     public boolean isNullAngle() {
-        return isNullAngle(this);
+        return this.radian == 0;
     }
 
     public boolean isStraight() {
-        return isStraight(this);
+        return this.radian == Math.PI;
     }
 
     public double toRadians() {

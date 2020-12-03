@@ -5,7 +5,15 @@ import lombok.Value;
 
 @Value
 @Builder
-public class KeyFrame {
+public class Segment {
+
+    double distance;
+    double radius;
+    double angle;
+
+    boolean forward;
+
     Point2d point;
     Vector direction;
+
 }
