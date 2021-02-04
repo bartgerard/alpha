@@ -22,6 +22,7 @@ public class FileBasedNamedQueryConfiguration {
         properties.setLocation(new ClassPathResource("jdbc-named-file-based-queries.properties"));
         properties.afterPropertiesSet();
         final PropertiesBasedNamedQueries namedQueries = new PropertiesBasedNamedQueries(properties.getObject());
+        // TODO
         factory.setNamedQueries(namedQueries);
     }
 
